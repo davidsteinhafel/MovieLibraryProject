@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPISample.Data;
@@ -24,12 +23,16 @@ namespace WebAPISample.Controllers
         public IActionResult Get()
         {
             // Retrieve all movies from db logic
-            var movies = _context.Movies;
-            return Ok(movies);
+            var movie = _context.Movies;
+            if (movie == null)
+            {
+                return BadRequest();
+            }
+            return Ok(_context.Movies);
         }
 
         // GET api/movie/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
             var movieOnDb = await _context.Movies.Where(x => x.MovieId == id).FirstOrDefaultAsync();
@@ -39,19 +42,27 @@ namespace WebAPISample.Controllers
             }
             return Ok(movieOnDb);
         }
-
+        
         // POST api/movie
         [HttpPost]
         public void Post([FromBody]Movie value)
         {
             // Create movie in db logic
+            _context.Movies.Add(value);
+            _context.SaveChanges();
         }
 
         // PUT api/movie/5
         [HttpPut]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Movie movie)
         {
             // Update movie in db logic
+            var movieOnDb = _context.Movies.Single(x => x.MovieId == id);
+         
+            movieOnDb.Director = movie.Director;
+            movieOnDb.Genre = movie.Genre;
+            movieOnDb.Title = movie.Title;
+            _context.SaveChanges();
         }
 
         // DELETE api/movie/5
@@ -59,6 +70,10 @@ namespace WebAPISample.Controllers
         public void Delete(int id)
         {
             // Delete movie from db logic
+            var movieOnDb = _context.Movies.Single(x => x.MovieId == id);
+            _context.Movies.Remove(movieOnDb);
+            _context.SaveChanges();
+
         }
     }
 }
