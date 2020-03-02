@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebAPISample.Data;
 using WebAPISample.Models;
 
@@ -23,15 +23,20 @@ namespace WebAPISample.Controllers
         public IEnumerable<string> Get()
         {
             // Retrieve all movies from db logic
+            //return _context.Movies.Include(m => m.Title == ).Select();
             return new string[] { "movie1 string", "movie2 string" };
         }
 
         // GET api/movie/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            // Retrieve movie by id from db logic
-            return "value";
+            var movieOnDb = await _context.Movies.Include(x => x.MovieId == id).FirstOrDefaultAsync();
+            if (movieOnDb == null)
+            {
+                return NotFound();
+            }
+            return Ok(movieOnDb);
         }
 
         // POST api/movie
@@ -39,6 +44,8 @@ namespace WebAPISample.Controllers
         public void Post([FromBody]Movie value)
         {
             // Create movie in db logic
+
+
         }
 
         // PUT api/movie/5
