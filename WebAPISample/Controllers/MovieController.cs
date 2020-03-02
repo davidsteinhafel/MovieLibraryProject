@@ -73,7 +73,6 @@ namespace WebAPISample.Controllers
             var movieOnDb = _context.Movies.Single(x => x.MovieId == id);
             _context.Movies.Remove(movieOnDb);
             _context.SaveChanges();
-
         }
     }
 }

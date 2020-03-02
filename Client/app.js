@@ -6,6 +6,8 @@
             Genre: this["genre"].value
         };
 
+        var str = JSON.stringify(dict);
+
         $.ajax({
             url: 'https://localhost:44325/api/movie',
             dataType: 'json',

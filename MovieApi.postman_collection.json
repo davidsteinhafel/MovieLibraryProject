@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "d5bdf651-85d2-492b-9558-a596a3ad7eb8",
+		"name": "MovieApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:44325/api/movie?Title=Mouse&Director=dave&Genre=Action",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Title\": \"Shawshank Redemption\",\n    \"Director\": \"Frank Darabont\",\n    \"Genre\": \"Drama\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44325/api/movie?Title=Mouse&Director=dave&Genre=Action",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie"
+					],
+					"query": [
+						{
+							"key": "Title",
+							"value": "Mouse"
+						},
+						{
+							"key": "Director",
+							"value": "dave"
+						},
+						{
+							"key": "Genre",
+							"value": "Action"
+						}
+					]
+				},
+				"description": "Post request for adding Shawshank Redemption into database"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44325/api/movie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44325/api/movie",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie"
+					]
+				},
+				"description": "Get request to get all movies in database"
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44325/api/movie/3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44325/api/movie/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie",
+						"3"
+					]
+				},
+				"description": "Get request for grabbing movie from database that has MovieId = 3."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44325/api/movie?id=2",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Title\":\"The Dark Knight 2\",\n\t\"Genre\":\"Drama\",\n\t\"Director\":\"Christopher Nolan\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44325/api/movie?id=2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				},
+				"description": "Put request for editing The Dark Knight's title to The Dark Knight 2."
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
