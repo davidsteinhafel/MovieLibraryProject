@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebAPISample.Data;
 using WebAPISample.Models;
 
@@ -20,18 +21,23 @@ namespace WebAPISample.Controllers
         }
         // GET api/movie
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
             // Retrieve all movies from db logic
-            return new string[] { "movie1 string", "movie2 string" };
+            var movies = _context.Movies;
+            return Ok(movies);
         }
 
         // GET api/movie/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            // Retrieve movie by id from db logic
-            return "value";
+            var movieOnDb = await _context.Movies.Where(x => x.MovieId == id).FirstOrDefaultAsync();
+            if (movieOnDb == null)
+            {
+                return NotFound();
+            }
+            return Ok(movieOnDb);
         }
 
         // POST api/movie
