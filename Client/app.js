@@ -1,4 +1,4 @@
-(function($){
+function add(){
     function processForm( e ){
         var dict = {
         	Title : this["title"].value,
@@ -7,6 +7,7 @@
         };
 
         var str = JSON.stringify(dict);
+        console.log(str);
 
         $.ajax({
             url: 'https://localhost:44325/api/movie',
@@ -26,7 +27,7 @@
     }
 
     $('#my-form').submit( processForm );
-})(jQuery);
+}
 
 
 function getData(){
@@ -36,7 +37,7 @@ function getData(){
         type:"get",
         contentType:"application/json",
         success: (data, textStatus, jqXHR) => populateTable(data),
-        error: () => alert("Error status" + data)
+        error: (data,textStatus) => alert("Error status " + textStatus)
     });
 }
 
@@ -48,12 +49,95 @@ function populateTable(data, textStatus, jqXHR){
         $('#movieTable').append(
             "<tr>" +
                 "<td>" + el.title + "</td>" +
+                "<td>" +  el.director + "</td>" +
                 "<td>" + el.genre + "</td>" +
-                "<td>" + el.director + "</td>" +
+                "<td>" + createDeleteButtton(el.movieId) + "</td>" +
+                "<td>" + createEditButtton(el.movieId) + "</td>" +
             "</tr>"
             );
          }
     );
+}
+
+function createDeleteButtton(id){
+    return "<button value='" + id + "' onclick='deleteMovie(this.value);'>Delete</button>";
+}
+function createEditButtton(id){
+    return "<button value='" + id + "' onclick='editForm(this.value);'>Edit</button>";
+}
+
+function deleteMovie(movieId){
+    $.ajax({
+        url:"https://localhost:44325/api/movie?" + $.param({"id": movieId }),
+        type:"delete",
+        contentType:"application/json",
+        error: (data,textStatus) => alert("Error status " + textStatus)
+    })
+    .done(() => {
+        //requests are faster than server processing. Temporary solution to redisplaying data after deletion.
+        window.setTimeout(200);
+        getData();
+    });
+}
+
+function editForm(id){
+    $("#edit-Form").show(500);
+    getMovieData(id);
+
+}
+
+function getMovieData(movieId){
+    $.ajax({
+        url: "https://localhost:44325/api/movie/" + movieId,
+        type: "get",
+        contentType:"application/json",
+        dataType:"json",
+        success: (data,textStatus,jqXHR) => processMovie(data),
+        error: (data,textStatus) => alert("Error status: " + textStatus)
+    })
+}
+
+function processMovie(data){
+    $("#edit-Form > input[name='title']").val(data["title"]);
+    $("#edit-Form > input[name='director']").val(data["director"]);
+    $("#edit-Form > input[name='genre']").val(data["genre"]);
+    $("#edit-Form").prepend('<input type="hidden" name="id" value="' + data["movieId"] + '">')
+}
+
+function edit(){
+    $("#edit-Form").submit(processEditForm);
+}
+
+function processEditForm(e){
+
+    var dict = {
+        Title : this["title"].value,
+        Director: this["director"].value,
+        Genre: this["genre"].value,
+    };
+    var movieId = this["id"].value;
+    console.log(dict);
+
+    $.ajax({
+        url:"https://localhost:44325/api/movie?" + $.param({"id": movieId }),
+        dataType: "json",
+        type: "put",
+        contentType:"application/json",
+        data: JSON.stringify(dict),
+        processData: false,
+        success: (textStatus) => {
+            $("#edit-Form").hide(500);
+            alert(textStatus);
+            console.log(textStatus);
+
+        },
+        error: (data) => {
+            alert(data);
+            console.log(data);
+        }
+    });
+
+    e.preventDefault();
 }
 
 
