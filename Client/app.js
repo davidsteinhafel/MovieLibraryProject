@@ -1,4 +1,4 @@
-(function($){
+function add(){
     function processForm( e ){
         var dict = {
         	Title : this["title"].value,
@@ -7,6 +7,7 @@
         };
 
         var str = JSON.stringify(dict);
+        console.log(str);
 
         $.ajax({
             url: 'https://localhost:44325/api/movie',
@@ -26,7 +27,7 @@
     }
 
     $('#my-form').submit( processForm );
-})(jQuery);
+}
 
 
 function getData(){
@@ -80,7 +81,7 @@ function deleteMovie(movieId){
 }
 
 function editForm(id){
-    $("#edit-Form").toggle(500);
+    $("#edit-Form").show(500);
     getMovieData(id);
 
 }
@@ -89,7 +90,7 @@ function getMovieData(movieId){
     $.ajax({
         url: "https://localhost:44325/api/movie/" + movieId,
         type: "get",
-        contentType:"appliaction/json",
+        contentType:"application/json",
         dataType:"json",
         success: (data,textStatus,jqXHR) => processMovie(data),
         error: (data,textStatus) => alert("Error status: " + textStatus)
@@ -104,13 +105,39 @@ function processMovie(data){
 }
 
 function edit(){
+    $("#edit-Form").submit(processEditForm);
+}
+
+function processEditForm(e){
+
     var dict = {
         Title : this["title"].value,
         Director: this["director"].value,
         Genre: this["genre"].value,
     };
     var movieId = this["id"].value;
-    console.log(movieId);
+    console.log(dict);
+
+    $.ajax({
+        url:"https://localhost:44325/api/movie?" + $.param({"id": movieId }),
+        dataType: "json",
+        type: "put",
+        contentType:"application/json",
+        data: JSON.stringify(dict),
+        processData: false,
+        success: (textStatus) => {
+            $("#edit-Form").hide(500);
+            alert(textStatus);
+            console.log(textStatus);
+
+        },
+        error: (data) => {
+            alert(data);
+            console.log(data);
+        }
+    });
+
+    e.preventDefault();
 }
 
 
