@@ -10,20 +10,31 @@
     <pre></pre>
 </div>
 
-<form id="my-form">
+<form id="my-form" >
     <input type="text" name="title" placeholder="Title" />
     <input type="text" name="director" placeholder="Director" />
     <input type="text" name="genre" placeholder="Genre" />
 
     <button type="submit">Submit</button>
 </form>
+<br><br>
+
+<form id="edit-Form" hidden>
+    <input type="text" name="title" placeholder="Title" />
+    <input type="text" name="director" placeholder="Director" />
+    <input type="text" name="genre" placeholder="Genre" />
+
+    <button type="submit" onsubmit="edit();" >Submit</button>
+</form>
+<br>
 
 <table>
     <thead>
         <tr>
             <th>Title</th>
-            <th>Genre</th>
             <th>Director</th>
+            <th>Genre</th>
+            <th></th>
         </tr>
     </thead>
     <tbody id="movieTable"></tbody>
