@@ -10,7 +10,6 @@ function processForm( e ){
 
     $.ajax({
         url: 'https://localhost:44325/api/movie',
-        dataType: 'json',
         type: 'post',
         contentType: 'application/json',
         data: JSON.stringify(dict),
@@ -21,11 +20,11 @@ function processForm( e ){
         }
     })
     .then(() =>{
-        e.preventDefault();
+        
         $("#my-form")[0].reset();
         getData();
     });
-
+    e.preventDefault();
 
 }
 
@@ -33,7 +32,7 @@ function processForm( e ){
 function getData(){
     $.ajax({
         url:"https://localhost:44325/api/movie",
-        dataType:"json",
+        //dataType:"json",
         type:"get",
         contentType:"application/json",
         success: (data, textStatus, jqXHR) => populateTable(data),
@@ -91,7 +90,7 @@ function getMovieData(movieId){
         url: "https://localhost:44325/api/movie/" + movieId,
         type: "get",
         contentType:"application/json",
-        dataType:"json",
+        //dataType:"json",
         success: (data,textStatus,jqXHR) => processMovie(data),
         error: (data,textStatus) => alert("Error status: " + textStatus)
     })
@@ -139,9 +138,6 @@ function processEditForm(e){
     $("#edit-Form").hide(500); 
 
 }
-
-
-
 
 ($(document).ready(function(){
     getData();
