@@ -8,7 +8,17 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lux/bootstrap.min.css">
+  <style> 
+    /* Make the image fully responsive */
+    .carousel-inner img {
+        width: 500px;
+        height: 700px;
+    }
+    .carousel-item{
+      text-align: center;
 
+    }
+    </style>
 </head>
 
 <body background="movie_reel_bg.jpg">
@@ -20,12 +30,13 @@
         <h1>Welcome to Movie Library</h1>
       </div>
       
+      
         <form id="my-form">
           <input type="text" name="title" placeholder="Title" />
           <input type="text" name="director" placeholder="Director" />
           <input type="text" name="genre" placeholder="Genre" />
-          <button type="submit" onmouseover="imdb()" onclick="add()">Submit</button>
-          <small id="my-form" class="form-text text-muted">Enter a Movie to Search for</small>
+          <button type="submit" onclick="add()">Submit</button>
+          <small id="my-form" class="form-text text-muted">↑ Add Movie Here ↑</small>
         </form>
 
         <form id="edit-Form">
@@ -33,12 +44,12 @@
           <input type="text" name="director" placeholder="Director" />
           <input type="text" name="genre" placeholder="Genre" />
           <button type="submit" onclick="edit()">Submit</button>
-          <small id="edit-form" class="form-text text-muted">Enter Edits Here</small>
+          <small id="edit-form" class="form-text text-muted">↑ Enter Edits Here ↑</small>
         </form>
       </div>
     </div>
   </nav>
-  <table class="table table-hover table-light" id="movieTable">
+  <table class="table table-hover table-light m-0" style="overflow-x:auto; height: auto;" id="movieTable">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -82,6 +93,40 @@
       </tr>
     </tbody>
   </table>
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators" >
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+  
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="dark_knight.jpg" alt="batman">
+      </div>
+      <div class="carousel-item">
+        <img src="inception.jpg" alt="leo">
+      </div>
+      <div class="carousel-item">
+        <img src="pineapple3.jpg" alt="420">
+      </div>
+    </div>
+  
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
     crossorigin="anonymous"></script>
@@ -95,4 +140,5 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript" src="./app.js"></script>
 </body>
+
 </html>
