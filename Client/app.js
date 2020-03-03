@@ -1,6 +1,3 @@
-function add(){
-    $('#my-form').submit( processForm );
-}
 function processForm( e ){
     var dict = {
         Title : this["title"].value,
@@ -10,23 +7,20 @@ function processForm( e ){
 
     $.ajax({
         url: 'https://localhost:44325/api/movie',
-        dataType: 'json',
         type: 'post',
         contentType: 'application/json',
         data: JSON.stringify(dict),
         success: () => {
+            $("#my-form")[0].reset();
         },
         error: function( jqXhr, textStatus, errorThrown ){
-            console.log( errorThrown );
+          alert( errorThrown );
         }
     })
     .then(() =>{
-        e.preventDefault();
-        $("#my-form")[0].reset();
         getData();
     });
-
-
+    e.preventDefault();
 }
 
 
@@ -83,7 +77,6 @@ function deleteMovie(movieId){
 function editForm(id){
     $("#edit-Form").show(500);
     getMovieData(id);
-
 }
 
 function getMovieData(movieId){
@@ -105,10 +98,6 @@ function processMovie(data){
     $("#edit-Form").prepend('<input type="hidden" name="id" value="' + data["movieId"] + '">');
 }
 
-function edit(){
-    $("#edit-Form").submit(processEditForm);
-}
-
 function processEditForm(e){
 
     var dict = {
@@ -117,7 +106,6 @@ function processEditForm(e){
         Genre: this["genre"].value,
     };
     var movieId = this["id"].value;
-    console.log(dict);
 
     $.ajax({
         url:"https://localhost:44325/api/movie?" + $.param({"id": movieId }),
@@ -137,12 +125,11 @@ function processEditForm(e){
     });
     e.preventDefault();
     $("#edit-Form").hide(500); 
-
 }
 
-
-
-
 ($(document).ready(function(){
+    $("#edit-Form").hide();
+    $('#my-form').submit( processForm );
+    $("#edit-Form").submit(processEditForm);
     getData();
 }));
