@@ -45,19 +45,20 @@ function populateTable(data){
                 "<td>" + el.title + "</td>" +
                 "<td>" +  el.director + "</td>" +
                 "<td>" + el.genre + "</td>" +
-                "<td>" + createDeleteButtton(el.movieId) + "</td>" +
-                "<td>" + createEditButtton(el.movieId) + "</td>" +
+                "<td class='text-center'>" + createDeleteButtton(el.movieId) + "</td>" +
+                "<td class='text-center'>" + createEditButtton(el.movieId) + "</td>" +
             "</tr>"
             );
          }
     );
 }
 
+
 function createDeleteButtton(id){
-    return "<button value='" + id + "' onclick='deleteMovie(this.value);'>Delete</button>";
+    return "<button class='tn btn-outline-secondary btn-sm' value='" + id + "' onclick='deleteMovie(this.value);'>Delete</button>";
 }
 function createEditButtton(id){
-    return "<button value='" + id + "' onclick='editForm(this.value);'>Edit</button>";
+    return "<button  class='tn btn-outline-secondary btn-sm' value='" + id + "' onclick='editForm(this.value);'>Edit</button>";
 }
 
 function deleteMovie(movieId){
@@ -75,8 +76,8 @@ function deleteMovie(movieId){
 }
 
 function editForm(id){
-    $("#edit-Form").show(500);
-    $("#my-form").hide();
+    $("#edit-div").show(500);
+    $("#my-div").hide();
     getMovieData(id);
 }
 
@@ -92,10 +93,10 @@ function getMovieData(movieId){
 }
 
 function processMovie(data){
-    $("#edit-Form > input[name='title']").val(data["title"]);
-    $("#edit-Form > input[name='director']").val(data["director"]);
-    $("#edit-Form > input[name='genre']").val(data["genre"]);
-    $("#edit-Form > input[name='id']").remove();
+    $("#edit-Form > div > input[name='title']").val(data["title"]);
+    $("#edit-Form > div > input[name='director']").val(data["director"]);
+    $("#edit-Form > div > input[name='genre']").val(data["genre"]);
+    $("#edit-Form > div > input[name='id']").remove();
     $("#edit-Form").prepend('<input type="hidden" name="id" value="' + data["movieId"] + '">');
 }
 
@@ -115,18 +116,18 @@ function processEditForm(e){
         data: JSON.stringify(dict),
         success: () => {
         },
-        error: (data) => {
+        error: (data,textStatus) => {
             alert("Error! Check console for details.");
-            console.log(data);
+            console.log(data,textStatus);
         }
     })
     .then(() =>
     {
-        $("#my-form").show(500);
+        $("#my-div").show(500);
         getData();
     });
     e.preventDefault();
-    $("#edit-Form").hide(500); 
+    $("#edit-div").hide(); 
 }
 
 function processSearchForm(e){
@@ -151,7 +152,7 @@ function processSearchForm(e){
 }
 
 ($(document).ready(function(){
-    $("#edit-Form").hide();
+    $("#edit-div").hide();
     $('#my-form').submit( processForm );
     $("#edit-Form").submit(processEditForm);
     $("#search-Form").submit(processSearchForm);
