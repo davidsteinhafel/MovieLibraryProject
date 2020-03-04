@@ -19,19 +19,30 @@
             <div class="header">
                 <h1>Welcome to Movie Library</h1>
             </div>
-            <div class="search-container">
-                <form id="my-form">
+            <div class="search-container form-inline">
+                <form class="mr-4" id="my-form">
                     <input type="text" name="title" placeholder="Title" />
                     <input type="text" name="director" placeholder="Director" />
                     <input type="text" name="genre" placeholder="Genre" />
                     <button type="submit">Submit</button>
                 </form>
-                <form id="edit-Form">
+                <form class="mr-4" id="edit-Form">
                     <input type="text" name="title" placeholder="Title" />
                     <input type="text" name="director" placeholder="Director" />
                     <input type="text" name="genre" placeholder="Genre" />
                     <button type="submit">Submit</button>
                 </form>
+                <form id="search-Form">
+                    <input type="text" required name="searchParams" placeholder="Search by movie field">
+                    <select id="fieldList" name="fieldList">
+                        <option selected disabled>Select Field</option>
+                        <option>Title</option>
+                        <option>Director</option>
+                        <option>Genre</option>
+                    </select>
+                    <button  type="submit" >Search</button>
+                </form>
+                
             </div>
     </nav>
     <table class="table table-hover table-light" id="movieTable">

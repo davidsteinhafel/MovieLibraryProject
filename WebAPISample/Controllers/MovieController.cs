@@ -42,7 +42,23 @@ namespace WebAPISample.Controllers
             }
             return Ok(movieOnDb);
         }
-        
+
+        // GET api/movie/5
+        [HttpGet("{field}/{searchParam}")]
+        public IActionResult Search(string field, string searchParam)
+        {
+            var movies = field switch
+            {
+                ("Genre") => _context.Movies.Where(x => x.Genre.Equals(searchParam)).ToList(),
+                ("Director") => _context.Movies.Where(x => x.Director.Equals(searchParam)).ToList(),
+                ("Title") => _context.Movies.Where(x => x.Title.Contains(searchParam)).ToList(),
+                _ => _context.Movies.ToList()
+            };
+            
+            return Ok(movies);
+        }
+
+
         // POST api/movie
         [HttpPost]
         public void Post([FromBody]Movie value)
