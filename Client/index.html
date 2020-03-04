@@ -2,91 +2,157 @@
 <html lang="en">
 
 <head>
-    <title>jQuery AJAX POST Form</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lux/bootstrap.min.css">
-
+  <title>jQuery AJAX POST Form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lux/bootstrap.min.css">
+  <style> 
+    /* Make the image fully responsive */
+    .carousel-inner img {
+        /* width: 500px; */
+        height: 100vmax;
+        width: 100vmin;
+      
+    }
+    .carousel-item{
+      text-align: center;
+    }
+    </style>
 </head>
 
 <body background="movie_reel_bg.jpg">
-    <div id="response">
+  <div id="response">
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="topnav">
+      <div class="header">
+        <h1>Welcome to Movie Library</h1>
+      </div>
+      <div class="container w-100 form-inline">
+        <form id="my-form">
+            <input type="text" name="title" placeholder="Title" />
+            <input type="text" name="director" placeholder="Director" />
+            <input type="text" name="genre" placeholder="Genre" />
+            <button type="submit" onclick="add()">Submit</button>
+            <small id="my-form" class="form-text text-muted">↑ Add Movie Here ↑</small>
+          </form>
+          <form id="edit-Form">
+            <input type="text" name="title" placeholder="Title" />
+            <input type="text" name="director" placeholder="Director" />
+            <input type="text" name="genre" placeholder="Genre" />
+            <button type="submit" style="width: fit-content;" onclick="edit()">Submit</button>
+            <small id="edit-form" class="form-text text-muted">↑ Enter Edits Here ↑</small>
+          </form>
+          <form id="search-Form">
+              <input type="text" required name="searchParams" placeholder="Search by movie field">
+              <select id="fieldList" name="fieldList">
+                  <option selected disabled>Select Field</option>
+                  <option>Title</option>
+                  <option>Director</option>
+                  <option>Genre</option>
+              </select>
+              <button  type="submit" >Search</button>
+          </form>
+
+      </div>
+        
+      </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="topnav">
-            <div class="header">
-                <h1>Welcome to Movie Library</h1>
-            </div>
-            <div class="search-container form-inline">
-                <form class="mr-4" id="my-form">
-                    <input type="text" name="title" placeholder="Title" />
-                    <input type="text" name="director" placeholder="Director" />
-                    <input type="text" name="genre" placeholder="Genre" />
-                    <button type="submit">Submit</button>
-                </form>
-                <form class="mr-4" id="edit-Form">
-                    <input type="text" name="title" placeholder="Title" />
-                    <input type="text" name="director" placeholder="Director" />
-                    <input type="text" name="genre" placeholder="Genre" />
-                    <button type="submit">Submit</button>
-                </form>
-                <form id="search-Form">
-                    <input type="text" required name="searchParams" placeholder="Search by movie field">
-                    <select id="fieldList" name="fieldList">
-                        <option selected disabled>Select Field</option>
-                        <option>Title</option>
-                        <option>Director</option>
-                        <option>Genre</option>
-                    </select>
-                    <button  type="submit" >Search</button>
-                </form>
-                
-            </div>
-    </nav>
-    <table class="table table-hover table-light" id="movieTable">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Director</th>
-                <th scope="col">Genre</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row" id="row1">1</th>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2"></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+  </nav>
+  <table class="table table-hover table-light m-0" style="overflow-x: visible; height: auto;" id="movieTable">
+    <thead>
+      
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Director</th>
+        <th scope="col">Genre</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr>
+        <th scope="row" id="row1">1</th>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td colspan="2"></td>
+        <td></td>
+      </tr> -->
+    </tbody>
+  </table>
+  <div id="demo" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ul class="carousel-indicators" >
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+  
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="dark_knight.jpg" alt="batman">
+      </div>
+      <div class="carousel-item">
+        <img src="inception.jpg" alt="leo">
+      </div>
+      <div class="carousel-item">
+        <img src="pineapple3.jpg" alt="420">
+      </div>
+    </div>
+  
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="./app.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="./app.js"></script>
 </body>
 
 </html>

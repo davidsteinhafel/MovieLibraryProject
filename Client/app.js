@@ -27,7 +27,7 @@ function processForm( e ){
 function getData(){
     $.ajax({
         url:"https://localhost:44325/api/movie",
-        dataType:"json",
+        //dataType:"json",
         type:"get",
         contentType:"application/json",
         success: (data, textStatus, jqXHR) => populateTable(data),
@@ -85,7 +85,7 @@ function getMovieData(movieId){
         url: "https://localhost:44325/api/movie/" + movieId,
         type: "get",
         contentType:"application/json",
-        dataType:"json",
+        //dataType:"json",
         success: (data,textStatus,jqXHR) => processMovie(data),
         error: (data,textStatus) => alert("Error status: " + textStatus)
     })

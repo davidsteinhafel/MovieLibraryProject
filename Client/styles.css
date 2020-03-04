@@ -1,12 +1,3 @@
-body {
-    background: url("movie_reel_bg.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-}
-#row1{
-    
-}
-#row1:hover .overlay {
-    opacity: 1;
-}
+carousel-inner img {
+    width: 100%;
+    height: 100%;}
