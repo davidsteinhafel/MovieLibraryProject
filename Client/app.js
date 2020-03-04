@@ -35,7 +35,7 @@ function getData(){
     });
 }
 
-function populateTable(data, textStatus, jqXHR){
+function populateTable(data){
     $("#movieTable").html('');
     console.log(data);
 
@@ -76,6 +76,7 @@ function deleteMovie(movieId){
 
 function editForm(id){
     $("#edit-Form").show(500);
+    $("#my-form").hide();
     getMovieData(id);
 }
 
@@ -121,15 +122,38 @@ function processEditForm(e){
     })
     .then(() =>
     {
+        $("#my-form").show(500);
         getData();
     });
     e.preventDefault();
     $("#edit-Form").hide(500); 
 }
 
+function processSearchForm(e){
+    var dict = {
+        Field: this["fieldList"].value,
+        SearchParams : this["searchParams"].value,
+    };
+
+    $.ajax({
+        url:"https://localhost:44325/api/movie/" + dict.Field + "/" + dict.SearchParams,
+        type: "get",
+        contentType:"application/json",
+        success: (data) => populateTable(data),
+        error: (data) => {
+            alert("Error! Check console for details.");
+            console.log(data);
+        }
+    });
+    e.preventDefault();
+    // return false;
+
+}
+
 ($(document).ready(function(){
     $("#edit-Form").hide();
     $('#my-form').submit( processForm );
     $("#edit-Form").submit(processEditForm);
+    $("#search-Form").submit(processSearchForm);
     getData();
 }));
