@@ -30,22 +30,22 @@
       <div class="header">
         <h1>Welcome to Movie Library</h1>
       </div>
-      <div class="container w-100 form-inline">
-        <form id="my-form">
+      <div class="container w-100 form-inline flex">
+        <form class="mr-3 m-relative" id="my-form">
             <input type="text" name="title" placeholder="Title" />
             <input type="text" name="director" placeholder="Director" />
             <input type="text" name="genre" placeholder="Genre" />
             <button type="submit" onclick="add()">Submit</button>
             <small id="my-form" class="form-text text-muted">↑ Add Movie Here ↑</small>
           </form>
-          <form id="edit-Form">
+          <form class="mr-3"id="edit-Form">
             <input type="text" name="title" placeholder="Title" />
             <input type="text" name="director" placeholder="Director" />
             <input type="text" name="genre" placeholder="Genre" />
             <button type="submit" style="width: fit-content;" onclick="edit()">Submit</button>
             <small id="edit-form" class="form-text text-muted">↑ Enter Edits Here ↑</small>
           </form>
-          <form id="search-Form">
+          <form class="justify-content-end" id="search-Form">
               <input type="text" required name="searchParams" placeholder="Search by movie field">
               <select id="fieldList" name="fieldList">
                   <option selected disabled>Select Field</option>
@@ -54,6 +54,7 @@
                   <option>Genre</option>
               </select>
               <button  type="submit" >Search</button>
+              <small id="my-form" class="form-text text-muted">↑ Search Movie Here ↑</small>
           </form>
 
       </div>
