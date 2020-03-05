@@ -69,8 +69,6 @@ function deleteMovie(movieId){
         error: (data,textStatus) => alert("Error status " + textStatus)
     })
     .then(() => {
-        //requests are faster than server processing. Temporary solution to redisplaying data after deletion.
-        // window.setTimeout(200);
         getData();
     });
 }
@@ -86,7 +84,6 @@ function getMovieData(movieId){
         url: "https://localhost:44325/api/movie/" + movieId,
         type: "get",
         contentType:"application/json",
-        //dataType:"json",
         success: (data,textStatus,jqXHR) => processMovie(data),
         error: (data,textStatus) => alert("Error status: " + textStatus)
     })
